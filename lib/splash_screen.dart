@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:learning/CheckUser.dart';
-import 'package:learning/main.dart';
 
 class Splash_Screen extends StatefulWidget {
   const Splash_Screen({super.key});

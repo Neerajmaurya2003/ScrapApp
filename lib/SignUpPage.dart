@@ -1,7 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:learning/HomePage.dart';
-import 'package:learning/NewCustomerInfoPage.dart';
+import 'package:learning/Firebase/Firebase_Utilities.dart';
 import 'package:learning/Uihelper.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -17,28 +15,7 @@ class _SignUpPageState extends State<SignUpPage> {
   var confirmpasswordcontroller=TextEditingController();
   bool isobsecure=true;
 
-      signup(String email,String password)async{
-    if(email=="" && password==""){
-      return Uihelper.MyCustomdialogueBox(context, "Enter Email and Password");
-    }
-    else{
-      UserCredential? usercredential;
-      try{
-        usercredential=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        final user=usercredential.user;
-        if(user != null){
-
-         String Uid=user.uid;
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>NewCustomerInfoPage(Uid: Uid,)));
-        }
-      }
-      on FirebaseAuthException catch(ex){
-        return Uihelper.MyCustomdialogueBox(context, ex.code.toString());
-      }
-    }
-  }
-
-
+      
  
   @override
   Widget build(BuildContext context) {
@@ -159,7 +136,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ElevatedButton(
                         onPressed: (){
                           if(passwordcontroller.text.toString()==confirmpasswordcontroller.text.toString() && passwordcontroller.text.toString()!=""){
-                            signup(emailcontroller.text.toString(), passwordcontroller.text.toString());
+                            Firebase().signup(context,emailcontroller.text.toString(), passwordcontroller.text.toString());
                           }
                           else{
                             Uihelper.MyCustomdialogueBox(context, "Password doesn't match");

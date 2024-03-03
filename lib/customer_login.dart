@@ -1,29 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:learning/Firebase/Firebase_Utilities.dart';
 import 'package:learning/ForgetPassword.dart';
-import 'package:learning/HomePage.dart';
 import 'package:learning/SignUpPage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:learning/Uihelper.dart';
+
 
 class LoginPage extends StatelessWidget {
    LoginPage({super.key});
 
-  static login(String email,String password,BuildContext context)async{
-     if(email=="" && password==""){
-       return Uihelper.MyCustomdialogueBox(context, "Enter email and password");
-     }
-     else{
-       UserCredential? usercredential;
-       try{
-         usercredential= await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) => 
-         Navigator.pushReplacement(context , MaterialPageRoute(builder: (context)=>const HomePage())));
-       }
-       on FirebaseAuthException catch(ex){
-         return Uihelper.MyCustomdialogueBox(context , ex.code.toString());
-       }
-     }
-     
-   }
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +159,7 @@ class _WideUserLoginState extends State<WideUserLogin> {
                           child: ElevatedButton(
                             child: Text("submit"),
                             onPressed:(){
-                              LoginPage.login(emailcontroller.text.toString(), Passwordcontroller.text.toString(),context);
+                              Firebase().login(emailcontroller.text.toString(), Passwordcontroller.text.toString(),context);
                             },
                           ),
                         ),
@@ -365,7 +348,7 @@ class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
                   ),
                   ElevatedButton(
                       onPressed: (){
-                        LoginPage.login(emailcontroller.text.toString(), Passwordcontroller.text.toString(),context);
+                        Firebase().login(emailcontroller.text.toString(), Passwordcontroller.text.toString(),context);
                       },
                       child:const Text("Login"),
                   ),
