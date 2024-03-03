@@ -20,7 +20,7 @@ class _CheckUserState extends State<CheckUser> {
   checkuser()async{
     final user= FirebaseAuth.instance.currentUser;
     setState(() {
-      _Homepage=user!=null?HomePage():StartingPage();
+      _Homepage=user!=null?const HomePage():const StartingPage();
     });
   }
 

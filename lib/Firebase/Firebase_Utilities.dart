@@ -26,9 +26,8 @@ login(String email,String password,BuildContext context)async{
        return Uihelper.MyCustomdialogueBox(context, "Enter email and password");
      }
      else{
-       UserCredential? usercredential;
        try{
-         usercredential= await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) => 
+         await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) => 
          Navigator.pushReplacement(context , MaterialPageRoute(builder: (context)=>const HomePage())));
        }
        on FirebaseAuthException catch(ex){

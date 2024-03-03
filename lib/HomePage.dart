@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
     notificationServices.getDeviceToken().then((value) => {
       print("Device token is:"),
       print(value),
-
     });
     super.initState();
   }

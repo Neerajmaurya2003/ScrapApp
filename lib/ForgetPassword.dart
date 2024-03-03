@@ -18,21 +18,21 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Forget Password"),
+        title:const Text("Forget Password"),
       ),
       body: Container(
-        margin: EdgeInsets.only(left: 10,right: 10),
+        margin:const EdgeInsets.only(left: 10,right: 10),
         height: 400,
         width: 380,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Uihelper.MyCustomtextfield(emailcontroller, "Enter Email"),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Uihelper.MyCustomtextfield(passwordcontroller, "Enter Old Password"),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Uihelper.MyCustomElevatedButton(() {

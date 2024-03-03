@@ -5,7 +5,7 @@ import 'package:learning/SignUpPage.dart';
 
 
 class LoginPage extends StatelessWidget {
-   LoginPage({super.key});
+   const LoginPage({super.key});
 
 
   @override
@@ -19,10 +19,10 @@ class LoginPage extends StatelessWidget {
           builder: (context, constraints) {
             if (constraints.maxWidth > 380) {
               // Display a wide layout
-              return WideUserLogin();
+              return const WideUserLogin();
             } else {
               // Display a narrow layout
-              return NarrowLayoutDesign();
+              return const NarrowLayoutDesign();
             }
           },
         )
@@ -41,7 +41,7 @@ class WideUserLogin extends StatefulWidget {
 
 class _WideUserLoginState extends State<WideUserLogin> {
   var emailcontroller=TextEditingController();
-  var Passwordcontroller=TextEditingController();
+  var passwordcontroller=TextEditingController();
   bool isobsecure=true;
 
   @override
@@ -86,92 +86,84 @@ class _WideUserLoginState extends State<WideUserLogin> {
                     Container(
                       height: 20,
                     ),
-                    Container(
-                      child: TextField(
-                        controller:emailcontroller,
-                        decoration: InputDecoration(
-                            labelText: "User Name or Phone Number ",
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.teal
-                                ),
-                                borderRadius: BorderRadius.circular(11)
-                            ),
-                            enabledBorder : OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  style: BorderStyle.solid,
-                                ),
-                                borderRadius: BorderRadius.circular(11)
-                            )
-                        ),
+                    TextField(
+                      controller:emailcontroller,
+                      decoration: InputDecoration(
+                          labelText: "User Name or Phone Number ",
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.teal
+                              ),
+                              borderRadius: BorderRadius.circular(11)
+                          ),
+                          enabledBorder : OutlineInputBorder(
+                              borderSide:const BorderSide(
+                                style: BorderStyle.solid,
+                              ),
+                              borderRadius: BorderRadius.circular(11)
+                          )
                       ),
                     ),
                     Container(
                       height: 20,
                     ),
-                    Container(
-                      child: TextField(
-                        controller:Passwordcontroller,
-                        obscureText: isobsecure,
-                        obscuringCharacter: "*",
-                        decoration: InputDecoration(
-                            labelText: "Enter Passwordcontrollerword",
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.teal,
-                                ),
-                                borderRadius: BorderRadius.circular(11)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    style: BorderStyle.solid
-
-                                ),
-                                borderRadius: BorderRadius.circular(11)
-                            ),
-                            disabledBorder:OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.black54,
-                                    style: BorderStyle.solid
-                                ),
-                                borderRadius: BorderRadius.circular(11)
-                            ),
-                            suffixIcon: IconButton(
-                              icon:isobsecure==true? Icon(Icons.visibility,color: Colors.black):Icon(Icons.visibility_off,color: Colors.black,),
-                              onPressed: (){
-                                setState(() {
-                                  if(isobsecure==true){
-                                    isobsecure=false;
-                                  }
-                                  else{
-                                    isobsecure=true;
-                                  }
-                                });
-                              },
-                            )
-                        ),
+                    TextField(
+                      controller:passwordcontroller,
+                      obscureText: isobsecure,
+                      obscuringCharacter: "*",
+                      decoration: InputDecoration(
+                          labelText: "Enter Passwordcontrollerword",
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:const BorderSide(
+                                color: Colors.teal,
+                              ),
+                              borderRadius: BorderRadius.circular(11)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:const BorderSide(
+                                  style: BorderStyle.solid
+                    
+                              ),
+                              borderRadius: BorderRadius.circular(11)
+                          ),
+                          disabledBorder:OutlineInputBorder(
+                              borderSide:const BorderSide(
+                                  color: Colors.black54,
+                                  style: BorderStyle.solid
+                              ),
+                              borderRadius: BorderRadius.circular(11)
+                          ),
+                          suffixIcon: IconButton(
+                            icon:isobsecure==true?const Icon(Icons.visibility,color: Colors.black):const Icon(Icons.visibility_off,color: Colors.black,),
+                            onPressed: (){
+                              setState(() {
+                                if(isobsecure==true){
+                                  isobsecure=false;
+                                }
+                                else{
+                                  isobsecure=true;
+                                }
+                              });
+                            },
+                          )
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child:Center(
-                          child: ElevatedButton(
-                            child: Text("submit"),
-                            onPressed:(){
-                              Firebase().login(emailcontroller.text.toString(), Passwordcontroller.text.toString(),context);
-                            },
-                          ),
+                      child: Center(
+                        child: ElevatedButton(
+                          child:const Text("submit"),
+                          onPressed:(){
+                            Firebase().login(emailcontroller.text.toString(), passwordcontroller.text.toString(),context);
+                          },
                         ),
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Container(
-                            child: Text("Forget Passwordcontrollerword",style: TextStyle(color:Colors.blue),),
-                          ),
+                        const Expanded(
+                          child: Text("Forget Passwordcontrollerword",style: TextStyle(color:Colors.blue),),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -179,9 +171,7 @@ class _WideUserLoginState extends State<WideUserLogin> {
                             onTap: (){
                             //  Navigator.push(context, MaterialPageRoute(builder: (context)=>New_Customer()));
                             },
-                            child: Container(
-                              child: Text("New User",style: TextStyle(color: Colors.blue),),
-                            ),
+                            child:const Text("New User",style: TextStyle(color: Colors.blue),),
                           ),
                         )
                       ],
@@ -207,7 +197,7 @@ class NarrowLayoutDesign extends StatefulWidget {
 
 class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
   var emailcontroller = TextEditingController();
-  var Passwordcontroller =TextEditingController();
+  var passwordcontroller =TextEditingController();
   bool isobsecure=true;
 
   @override
@@ -217,11 +207,11 @@ class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 80,
           ),
           Container(
-            margin: EdgeInsets.only(left: 10,right: 10),
+            margin:const EdgeInsets.only(left: 10,right: 10),
             width: 380,
             height: 450,
             child: Card(
@@ -239,133 +229,127 @@ class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
                         color: Colors.black
                       )
                     ),
-                    child: Icon(Icons.lock,size: 50,),
+                    child:const Icon(Icons.lock,size: 50,),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left:10.0,right: 10.0),
-                    child: Container(
-
-                        child: TextField(
-                          controller: emailcontroller,
-                          decoration: InputDecoration(
-                            labelText: "Enter Username or Email",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(
-                                width: 2,
-                              )
-                            ),
-                            enabledBorder: OutlineInputBorder(
-
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
-                                      width: 2,
-                                    ),
-                          ),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2,
-                                  color: Colors.teal,
-                                ),
-                                borderRadius: BorderRadius.circular(15)
-                            ),
-                            disabledBorder:OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 2,
-                                    color: Colors.black54,
-                                    style: BorderStyle.solid
-                                ),
-                                borderRadius: BorderRadius.circular(15)
-                            ),
-                          ),
+                    child: TextField(
+                      controller: emailcontroller,
+                      decoration: InputDecoration(
+                        labelText: "Enter Username or Email",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide:const BorderSide(
+                            width: 2,
+                          )
                         ),
+                        enabledBorder: OutlineInputBorder(
+                    
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide:const BorderSide(
+                                  width: 2,
+                                ),
+                      ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:const BorderSide(
+                              width: 2,
+                              color: Colors.teal,
+                            ),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                        disabledBorder:OutlineInputBorder(
+                            borderSide:const BorderSide(
+                              width: 2,
+                                color: Colors.black54,
+                                style: BorderStyle.solid
+                            ),
+                            borderRadius: BorderRadius.circular(15)
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0,right: 10.0),
-                    child: Container(
-
-                        child: TextField(
-                          controller: Passwordcontroller,
-                          obscureText: isobsecure,
-                          obscuringCharacter: "*",
-                          decoration: InputDecoration(
-                              labelText: "Enter Password",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide: BorderSide(
-                                    width: 2,
-                                  )
-                              ),
-                              enabledBorder: OutlineInputBorder(
-
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(
-                                  width: 2,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 2,
-                                    color: Colors.teal,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15)
-                              ),
-                              disabledBorder:OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 2,
-                                      color: Colors.black54,
-                                      style: BorderStyle.solid
-                                  ),
-                                  borderRadius: BorderRadius.circular(15)
-                              ),
-                              suffixIcon: IconButton(
-                                icon: isobsecure==true? Icon(Icons.visibility,color: Colors.black,): Icon(Icons.visibility_off,color: Colors.black,),
-                                onPressed: (){
-                                  if(isobsecure==true){
-                                    isobsecure=false;
-                                  }
-                                  else{
-                                    isobsecure=true;
-                                  }
-                                  setState((){});
-                                },
+                    child: TextField(
+                      controller: passwordcontroller,
+                      obscureText: isobsecure,
+                      obscuringCharacter: "*",
+                      decoration: InputDecoration(
+                          labelText: "Enter Password",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide:const BorderSide(
+                                width: 2,
                               )
-
                           ),
-
-                        ),
+                          enabledBorder: OutlineInputBorder(
+                    
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide:const BorderSide(
+                              width: 2,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:const BorderSide(
+                                width: 2,
+                                color: Colors.teal,
+                              ),
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          disabledBorder:OutlineInputBorder(
+                              borderSide:const BorderSide(
+                                width: 2,
+                                  color: Colors.black54,
+                                  style: BorderStyle.solid
+                              ),
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          suffixIcon: IconButton(
+                            icon: isobsecure==true?const  Icon(Icons.visibility,color: Colors.black,):const Icon(Icons.visibility_off,color: Colors.black,),
+                            onPressed: (){
+                              if(isobsecure==true){
+                                isobsecure=false;
+                              }
+                              else{
+                                isobsecure=true;
+                              }
+                              setState((){});
+                            },
+                          )
+                    
+                      ),
+                    
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 11,
                   ),
                   ElevatedButton(
                       onPressed: (){
-                        Firebase().login(emailcontroller.text.toString(), Passwordcontroller.text.toString(),context);
+                        Firebase().login(emailcontroller.text.toString(), passwordcontroller.text.toString(),context);
                       },
                       child:const Text("Login"),
                   ),
-                  SizedBox(
+                 const SizedBox(
                     height: 11,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> ForgetPassword()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const ForgetPassword()));
                       },
-                          child: Text("Forget Password",style: TextStyle(color: Colors.blue),)),
+                          child:const Text("Forget Password",style: TextStyle(color: Colors.blue),)),
                       TextButton(onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignUpPage()));
                       },
-                          child: Text("New User",style: TextStyle(color: Colors.blue),)
+                          child:const Text("New User",style: TextStyle(color: Colors.blue),)
                       )
 
                     ],
@@ -374,7 +358,7 @@ class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           )
         ],
