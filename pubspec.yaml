@@ -45,9 +45,10 @@ dependencies:
   sqflite: ^2.3.2
   path: ^1.8.3
   firebase_messaging: ^14.7.17
-  flutter_local_notifications: ^16.3.2
+  flutter_local_notifications: ^16.3.3
   app_settings: ^5.1.1
   firebase_analytics: ^10.8.7
+  google_nav_bar: ^5.0.6
 
 dev_dependencies:
   flutter_test:

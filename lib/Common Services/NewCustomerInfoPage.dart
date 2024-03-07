@@ -1,8 +1,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:learning/HomePage.dart';
-import 'package:learning/Uihelper.dart';
+import 'package:learning/User%20Services/userHomepage.dart';
+import 'package:learning/Common%20Services/Uihelper.dart';
 
 class NewCustomerInfoPage extends StatefulWidget {
 
@@ -32,7 +32,7 @@ UserData(Map<String,dynamic> UserData)async{
   else{
     try{
   await db.collection(widget.Uid).doc(widget.Uid).set(UserData).then((value) => 
-  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomePage())));
+  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const userHomepage())));
     }
     on FirebaseException catch(e){
       return Uihelper.MyCustomdialogueBox(context, e.code.toString());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learning/Firebase/Firebase_Utilities.dart';
-import 'package:learning/ForgetPassword.dart';
-import 'package:learning/SignUpPage.dart';
+import 'package:learning/Common%20Services/ForgetPassword.dart';
+import 'package:learning/Common%20Services/SignUpPage.dart';
 
 
 class LoginPage extends StatelessWidget {

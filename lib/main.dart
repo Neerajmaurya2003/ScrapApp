@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:learning/Firebase/firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:learning/customer_login.dart';
+import 'package:learning/Common%20Services/customer_login.dart';
 import 'package:learning/splash_screen.dart';
 
 void main()async{
@@ -45,7 +45,7 @@ class _StartingPageState extends State<StartingPage> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return const Scaffold(
       body: WideLayoutDesign()
     );
   }
@@ -56,7 +56,7 @@ class WideLayoutDesign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
         height: double.infinity,
         child: Column(
@@ -91,7 +91,7 @@ class WideLayoutDesign extends StatelessWidget {
               height: 60,
               child: ElevatedButton(
                   onPressed: (){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginPage()));
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginPage()));
                   },
                   child:const Center(child: Text("GET STARTED"))),
             )

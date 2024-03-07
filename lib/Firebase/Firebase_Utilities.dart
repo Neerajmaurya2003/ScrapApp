@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:learning/HomePage.dart';
-import 'package:learning/NewCustomerInfoPage.dart';
-import 'package:learning/Uihelper.dart';
+import 'package:learning/User%20Services/userHomepage.dart';
+import 'package:learning/Common%20Services/NewCustomerInfoPage.dart';
+import 'package:learning/Common%20Services/Uihelper.dart';
 
 class Firebase{
   
@@ -28,7 +28,7 @@ login(String email,String password,BuildContext context)async{
      else{
        try{
          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) => 
-         Navigator.pushReplacement(context , MaterialPageRoute(builder: (context)=>const HomePage())));
+         Navigator.pushReplacement(context , MaterialPageRoute(builder: (context)=>const userHomepage())));
        }
        on FirebaseAuthException catch(ex){
          return Uihelper.MyCustomdialogueBox(context , ex.code.toString());

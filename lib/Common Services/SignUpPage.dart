@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning/Firebase/Firebase_Utilities.dart';
-import 'package:learning/Uihelper.dart';
+import 'package:learning/Common%20Services/Uihelper.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
