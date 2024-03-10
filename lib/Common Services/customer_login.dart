@@ -1,3 +1,4 @@
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:learning/Firebase/Firebase_Utilities.dart';
 import 'package:learning/Common%20Services/ForgetPassword.dart';
@@ -154,7 +155,7 @@ class _WideUserLoginState extends State<WideUserLogin> {
                         child: ElevatedButton(
                           child:const Text("submit"),
                           onPressed:(){
-                            Firebase().login(emailcontroller.text.toString(), passwordcontroller.text.toString(),context);
+                           // Firebase().login(context: context,email: emailcontroller.text.toString(),password: passwordcontroller.text.toString());
                           },
                         ),
                       ),
@@ -163,7 +164,7 @@ class _WideUserLoginState extends State<WideUserLogin> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Expanded(
-                          child: Text("Forget Passwordcontrollerword",style: TextStyle(color:Colors.blue),),
+                          child: Text("Forget Password",style: TextStyle(color:Colors.blue),),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -198,6 +199,7 @@ class NarrowLayoutDesign extends StatefulWidget {
 class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
   var emailcontroller = TextEditingController();
   var passwordcontroller =TextEditingController();
+  var _dropDownController=SingleValueDropDownController();
   bool isobsecure=true;
 
   @override
@@ -208,12 +210,12 @@ class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
-            height: 80,
+            height: 30,
           ),
           Container(
             margin:const EdgeInsets.only(left: 10,right: 10),
             width: 380,
-            height: 450,
+            height: 550,
             child: Card(
               elevation: 5,
               child: Column(
@@ -327,12 +329,45 @@ class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
                     
                     ),
                   ),
+                  SizedBox(
+                    height: 11,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10,right: 10),
+                    child: DropDownTextField(
+                      textFieldDecoration: InputDecoration(
+                          labelText: "Select Category",
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              width: 2,
+                              color: Colors.teal,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              width: 2,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.circular(15),
+                          )
+                      ),
+                      controller: _dropDownController,
+                      dropDownItemCount: 2,
+                      dropDownList:const [
+                        DropDownValueModel(name: "HouseHold", value: "HouseHold"),
+                        DropDownValueModel(name: "Enterprize", value: "Enterprize")
+                      ],
+                      onChanged: (val){},
+                    ),
+                  ),
                   const SizedBox(
                     height: 11,
                   ),
                   ElevatedButton(
                       onPressed: (){
-                        Firebase().login(emailcontroller.text.toString(), passwordcontroller.text.toString(),context);
+                        Firebase().login(context: context,email:emailcontroller.text.toString(),password: passwordcontroller.text.toString(),collection: _dropDownController.dropDownValue!.value.toString());
                       },
                       child:const Text("Login"),
                   ),

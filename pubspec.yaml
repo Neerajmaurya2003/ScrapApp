@@ -49,6 +49,7 @@ dependencies:
   app_settings: ^5.1.1
   firebase_analytics: ^10.8.7
   google_nav_bar: ^5.0.6
+  dropdown_textfield: ^1.0.8
 
 dev_dependencies:
   flutter_test:

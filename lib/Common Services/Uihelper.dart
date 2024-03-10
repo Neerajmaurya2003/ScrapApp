@@ -8,7 +8,7 @@ class Uihelper {
       decoration: InputDecoration(
         labelText: text,
        focusedBorder: OutlineInputBorder(
-         borderSide: BorderSide(
+         borderSide: const BorderSide(
            width: 2,
            color: Colors.teal,
            style: BorderStyle.solid,
@@ -16,7 +16,7 @@ class Uihelper {
          borderRadius: BorderRadius.circular(15),
        ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             width: 2,
             style: BorderStyle.solid,
           ),
@@ -32,7 +32,7 @@ class Uihelper {
         actions: [
           ElevatedButton(onPressed: (){
             Navigator.pop(context);
-          }, child: Text("Close"))
+          }, child: const Text("Close"))
         ],
       );
     }) ;
@@ -53,26 +53,26 @@ class Uihelper {
           labelText: text,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 width: 2,
               )
           ),
           enabledBorder: OutlineInputBorder(
 
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 2,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 width: 2,
                 color: Colors.teal,
               ),
               borderRadius: BorderRadius.circular(15)
           ),
           disabledBorder:OutlineInputBorder(
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                   width: 2,
                   color: Colors.black54,
                   style: BorderStyle.solid
@@ -91,14 +91,14 @@ class Uihelper {
       decoration: InputDecoration(
           labelText: text,
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 2,
               style: BorderStyle.solid,
             ),
             borderRadius: BorderRadius.circular(15),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               width: 2,
               style: BorderStyle.solid,
             ),

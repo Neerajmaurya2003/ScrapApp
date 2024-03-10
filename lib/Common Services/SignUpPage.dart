@@ -1,3 +1,4 @@
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:learning/Firebase/Firebase_Utilities.dart';
 import 'package:learning/Common%20Services/Uihelper.dart';
@@ -12,10 +13,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   var emailcontroller=TextEditingController();
   var passwordcontroller=TextEditingController();
-  var confirmpasswordcontroller=TextEditingController();
   bool isobsecure=true;
-
-      
+  var _dropDownController=SingleValueDropDownController();
  
   @override
   Widget build(BuildContext context) {
@@ -29,14 +28,14 @@ class _SignUpPageState extends State<SignUpPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 80,
+            const SizedBox(
+              height: 50,
             ),
             Center(
               child: Container(
-                margin: EdgeInsets.only(left: 10,right: 10),
+                margin: const EdgeInsets.only(left: 10,right: 10),
                 width: 380,
-                height: 450,
+                height: 470,
                 child: Card(
                   elevation: 5,
                   child: Column(
@@ -52,9 +51,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                 color: Colors.black
                             )
                         ),
-                        child: Icon(Icons.lock,size: 50,),
+                        child: const Icon(Icons.lock,size: 50,),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Padding(
@@ -64,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: Uihelper.MyCustomtextfield(emailcontroller, "Enter Username or Email"),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Padding(
@@ -79,26 +78,26 @@ class _SignUpPageState extends State<SignUpPage> {
                                 labelText: "Enter Password",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       width: 2,
                                     )
                                 ),
                                 enabledBorder: OutlineInputBorder(
 
                                   borderRadius: BorderRadius.circular(15),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     width: 2,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                       width: 2,
                                       color: Colors.teal,
                                     ),
                                     borderRadius: BorderRadius.circular(15)
                                 ),
                                 disabledBorder:OutlineInputBorder(
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 2,
                                         color: Colors.black54,
                                         style: BorderStyle.solid
@@ -106,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     borderRadius: BorderRadius.circular(15)
                                 ),
                                 suffixIcon: IconButton(
-                                  icon: Icon(Icons.remove_red_eye,color: Colors.black,),
+                                  icon: const Icon(Icons.remove_red_eye,color: Colors.black,),
                                   onPressed: (){
                                     if(isobsecure==true){
                                       isobsecure=false;
@@ -123,26 +122,52 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 11,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 10.0,right: 10),
-                        child: Uihelper.MyCustomObsecureTextfield(confirmpasswordcontroller, "Confirm Password", true),
-                      ),
-                      SizedBox(
-                        height: 11,
+                        padding: const EdgeInsets.only(left: 10,right: 10),
+                        child: DropDownTextField(
+                          textFieldDecoration: InputDecoration(
+                            labelText: "Select Category",
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                width: 2,
+                                color: Colors.teal,
+                                style: BorderStyle.solid,
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                width: 2,
+                                style: BorderStyle.solid,
+                              ),
+                              borderRadius: BorderRadius.circular(15),
+                            )
+                        ),
+                          controller: _dropDownController,
+                            dropDownItemCount: 2,
+                            dropDownList:const [
+                              DropDownValueModel(name: "Household", value: "Household"),
+                              DropDownValueModel(name: "Enterprise", value: "Enterprise")
+                            ],
+                            onChanged: (val){},
+                        ),
                       ),
                       ElevatedButton(
-                        onPressed: (){
-                          if(passwordcontroller.text.toString()==confirmpasswordcontroller.text.toString() && passwordcontroller.text.toString()!=""){
-                            Firebase().signup(context,emailcontroller.text.toString(), passwordcontroller.text.toString());
+                        onPressed: ()async{
+                          print(emailcontroller.text.toString());
+                          print(passwordcontroller.text.toString());
+                          print(_dropDownController.dropDownValue!.value.toString());
+                          if(emailcontroller.text.toString()=="" || passwordcontroller.text.toString()=="" || _dropDownController.dropDownValue!.value.toString()==null){
+                            return await Uihelper.MyCustomdialogueBox(context, "Enter all fields");
                           }
                           else{
-                            Uihelper.MyCustomdialogueBox(context, "Password doesn't match");
+                            Firebase().signup(email: emailcontroller.text.toString(),context: context,password:passwordcontroller.text.toString(),whouser: _dropDownController.dropDownValue!.value.toString());
                           }
                         },
-                        child: Text("Submit"),
+                        child: const Text("Submit"),
                       ),
 
                     ],
@@ -150,7 +175,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
             )
           ],

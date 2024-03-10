@@ -36,7 +36,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               height: 30,
             ),
             Uihelper.MyCustomElevatedButton(() {
-              Firebase().forgetpassword(context, emailcontroller.text.toString());
+              Firebase().forgetpassword(context: context,email: emailcontroller.text.toString());
             }, "Reset Password"),
           ],
         ),

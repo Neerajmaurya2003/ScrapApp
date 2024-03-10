@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:learning/Enterprise%20Services/EnterpriseHomePage.dart';
 import 'package:learning/Firebase/Firebase_Utilities.dart';
 import 'package:learning/User%20Services/userHomepage.dart';
-import 'package:learning/Common%20Services/NewCustomerInfoPage.dart';
+import 'package:learning/User%20Services/UserInfoPage.dart';
 import 'package:learning/main.dart';
 
 class CheckUser extends StatefulWidget {
@@ -30,16 +31,8 @@ class _CheckUserState extends State<CheckUser> {
     }
     else{
      String Uid= user!.uid;
-     var data =await Firebase().User_data(Uid);
-     if(data?["Ishousehold"]==null){
-      _Homepage=NewCustomerInfoPage(Uid: Uid);
-     }
-     else if(data?["Ishousehold"]){
-      _Homepage=const userHomepage();
-     }
-     else{
-      _Homepage=Container(color: Colors.blue,);
-     }
+  var data =await Firebase().UserInfo(collection: "Household",Uid: Uid);
+    _Homepage=EnterpriseHomePage(collection: "Enterprise");
 
     }
     setState(() {

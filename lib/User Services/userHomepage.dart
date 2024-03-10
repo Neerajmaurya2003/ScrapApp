@@ -6,7 +6,8 @@ import 'package:learning/Notification%20services/notification_services.dart';
 import 'package:learning/Common%20Services/customer_login.dart';
 
 class userHomepage extends StatefulWidget {
-  const userHomepage({super.key});
+  final String collection;
+  const userHomepage({super.key,required this.collection});
 
   @override
   State<userHomepage> createState() => _userHomepageState();
@@ -40,7 +41,7 @@ class _userHomepageState extends State<userHomepage> {
   
 
     void _getData() async {
-    data = await Firebase().User_data(Uid);
+    data = await Firebase().UserInfo(Uid: Uid,collection: widget.collection);
     temp=data;
     setState(() {});
   }
