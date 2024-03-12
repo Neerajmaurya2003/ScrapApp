@@ -11,6 +11,7 @@ class EnterpriseHomePage extends StatefulWidget {
 }
 
 class _EnterpriseHomePageState extends State<EnterpriseHomePage> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +71,6 @@ class _EnterpriseHomePageState extends State<EnterpriseHomePage> {
           text: 'Profile',
               )
             ]
-          
       ),
     ),
     );

@@ -32,6 +32,7 @@ class _CheckUserState extends State<CheckUser> {
     else{
      String Uid= user!.uid;
   var data =await Firebase().UserInfo(collection: "Household",Uid: Uid);
+    // ignore: prefer_const_constructors
     _Homepage=EnterpriseHomePage(collection: "Enterprise");
 
     }

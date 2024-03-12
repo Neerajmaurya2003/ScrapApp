@@ -15,6 +15,7 @@ final String collection;
 }
 
 class _userInfoPageState extends State<userInfoPage> {
+
   var namecontroller=TextEditingController();
   var mobilenocontroller=TextEditingController();
   var addesscontroller=TextEditingController();
@@ -28,7 +29,7 @@ class _userInfoPageState extends State<userInfoPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title:const Text("Fill Required Information"),
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
