@@ -21,7 +21,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child:Column(
           mainAxisAlignment: MainAxisAlignment.center,

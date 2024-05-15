@@ -15,6 +15,15 @@ class _SignUpPageState extends State<SignUpPage> {
   var passwordcontroller=TextEditingController();
   bool isobsecure=true;
   var _dropDownController=SingleValueDropDownController();
+
+  @override
+  void dispose() {
+    emailcontroller.dispose();
+    passwordcontroller.dispose();
+    _dropDownController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
  
   @override
   Widget build(BuildContext context) {
@@ -150,7 +159,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             dropDownItemCount: 2,
                             dropDownList:const [
                               DropDownValueModel(name: "Household", value: "Household"),
-                              DropDownValueModel(name: "Enterprise", value: "Enterprise")
+                              //DropDownValueModel(name: "Enterprise", value: "Enterprise")
                             ],
                             onChanged: (val){},
                         ),

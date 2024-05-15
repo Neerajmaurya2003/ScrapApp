@@ -16,177 +16,14 @@ class LoginPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title:const Text("Already Have an Account"),) ,
       body: Center(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth > 380) {
-              // Display a wide layout
-              return const WideUserLogin();
-            } else {
-              // Display a narrow layout
-              return const NarrowLayoutDesign();
-            }
-          },
-        )
+        child: NarrowLayoutDesign(),
 
       ),
     );
   }
 }
 
-class WideUserLogin extends StatefulWidget {
-  const WideUserLogin({super.key});
 
-  @override
-  State<WideUserLogin> createState() => _WideUserLoginState();
-}
-
-class _WideUserLoginState extends State<WideUserLogin> {
-  var emailcontroller=TextEditingController();
-  var passwordcontroller=TextEditingController();
-  bool isobsecure=true;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            height: 40,
-          ),
-          Card(
-            elevation: 7,
-            child: Padding(
-              padding: const EdgeInsets.all(30),
-              child: Container(
-                height: 350,
-                width: 300,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100)
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                  color: Colors.black38,
-                                  width: 2
-                              )
-                          ),
-                          child:const CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.transparent,
-                            child: Icon(Icons.face),
-                          )
-                      ),
-                    ),
-                    Container(
-                      height: 20,
-                    ),
-                    TextField(
-                      controller:emailcontroller,
-                      decoration: InputDecoration(
-                          labelText: "User Name or Phone Number ",
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.teal
-                              ),
-                              borderRadius: BorderRadius.circular(11)
-                          ),
-                          enabledBorder : OutlineInputBorder(
-                              borderSide:const BorderSide(
-                                style: BorderStyle.solid,
-                              ),
-                              borderRadius: BorderRadius.circular(11)
-                          )
-                      ),
-                    ),
-                    Container(
-                      height: 20,
-                    ),
-                    TextField(
-                      controller:passwordcontroller,
-                      obscureText: isobsecure,
-                      obscuringCharacter: "*",
-                      decoration: InputDecoration(
-                          labelText: "Enter Passwordcontrollerword",
-                          focusedBorder: OutlineInputBorder(
-                              borderSide:const BorderSide(
-                                color: Colors.teal,
-                              ),
-                              borderRadius: BorderRadius.circular(11)
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide:const BorderSide(
-                                  style: BorderStyle.solid
-                    
-                              ),
-                              borderRadius: BorderRadius.circular(11)
-                          ),
-                          disabledBorder:OutlineInputBorder(
-                              borderSide:const BorderSide(
-                                  color: Colors.black54,
-                                  style: BorderStyle.solid
-                              ),
-                              borderRadius: BorderRadius.circular(11)
-                          ),
-                          suffixIcon: IconButton(
-                            icon:isobsecure==true?const Icon(Icons.visibility,color: Colors.black):const Icon(Icons.visibility_off,color: Colors.black,),
-                            onPressed: (){
-                              setState(() {
-                                if(isobsecure==true){
-                                  isobsecure=false;
-                                }
-                                else{
-                                  isobsecure=true;
-                                }
-                              });
-                            },
-                          )
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: ElevatedButton(
-                          child:const Text("submit"),
-                          onPressed:(){
-                           // Firebase().login(context: context,email: emailcontroller.text.toString(),password: passwordcontroller.text.toString());
-                          },
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Expanded(
-                          child: Text("Forget Password",style: TextStyle(color:Colors.blue),),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: InkWell(
-                            onTap: (){
-                            //  Navigator.push(context, MaterialPageRoute(builder: (context)=>New_Customer()));
-                            },
-                            child:const Text("New User",style: TextStyle(color: Colors.blue),),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 //Narrow layout design
 class NarrowLayoutDesign extends StatefulWidget {
@@ -201,6 +38,14 @@ class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
   var passwordcontroller =TextEditingController();
   var _dropDownController=SingleValueDropDownController();
   bool isobsecure=true;
+
+  @override
+  void dispose() {
+   emailcontroller.dispose();
+   passwordcontroller.dispose();
+   _dropDownController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -356,8 +201,8 @@ class _NarrowLayoutDesignState extends State<NarrowLayoutDesign> {
                       controller: _dropDownController,
                       dropDownItemCount: 2,
                       dropDownList:const [
-                        DropDownValueModel(name: "HouseHold", value: "HouseHold"),
-                        DropDownValueModel(name: "Enterprize", value: "Enterprize")
+                        DropDownValueModel(name: "Household", value: "Household"),
+                        //DropDownValueModel(name: "Enterprize", value: "Enterprize")
                       ],
                       onChanged: (val){},
                     ),

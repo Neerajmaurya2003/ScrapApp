@@ -1,174 +1,332 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:learning/Firebase/Firebase_Utilities.dart';
-import 'package:learning/Notification%20services/notification_services.dart';
-import 'package:learning/Common%20Services/customer_login.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:learning/Location%20Services/map.dart';
+import 'package:learning/User%20Services/allScheduledPickups.dart';
+import 'package:learning/User%20Services/blankscreen.dart';
+import 'package:learning/User%20Services/scheduledPickUpSummary.dart';
 
 class userHomepage extends StatefulWidget {
   final String collection;
-  const userHomepage({super.key,required this.collection});
+  final dynamic data;
+  final String Uid;
+  final List<Map<String, dynamic>> scheduledPickups;
+
+  const userHomepage(
+      {super.key,
+      required this.collection,
+      required this.data,
+      required this.Uid,
+      required this.scheduledPickups});
 
   @override
   State<userHomepage> createState() => _userHomepageState();
 }
 
 class _userHomepageState extends State<userHomepage> {
-  var myIconList=[Icon(Icons.map),Icon(Icons.fire_truck),Icon(Icons.add),Icon(Icons.add_a_photo),Icon(Icons.map),Icon(Icons.fire_truck),Icon(Icons.add),Icon(Icons.add_a_photo),];
   var Username;
-  late final data;
-  final Uid = FirebaseAuth.instance.currentUser!.uid;
-  var temp;
-  NotificationServices notificationServices=NotificationServices();
+  var data;
+  double? latitude, longitude;
+  late List<Map<String, dynamic>> pickupdata = [];
 
-  logout()async{
-    FirebaseAuth.instance.signOut().then((value) =>
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginPage())));
-  }
-
+void refreshData(Object data){
+  setState(() {
+    pickupdata.remove(data);
+  });
+}
   @override
   void initState() {
-    _getData();
-    notificationServices.requestNotificationPermission();
-    notificationServices.firebaseInit();
-    notificationServices.onTokenRefresh(); 
-    notificationServices.getDeviceToken().then((value) => {
-      print("Device token is:"),
-      print(value),
-    });
+    _getdata();
     super.initState();
   }
-  
 
-    void _getData() async {
-    data = await Firebase().UserInfo(Uid: Uid,collection: widget.collection);
-    temp=data;
+  _getdata() async {
+    data = await widget.data;
+    if (widget.scheduledPickups.isNotEmpty) {
+      pickupdata = widget.scheduledPickups;
+      pickupdata
+          .sort((a, b) => a["Date of Pickup"].compareTo(b["Date of Pickup"]));
+    }
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text("Log out"),
-              onTap: (){
-                logout();
-              },
-            )
-          ],
-        ),
-      ),
-      appBar: AppBar(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20))),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title:const Text("HomePage"),
-      ),
-      body:Container(
-        child:temp!=null
-        ?
-         SingleChildScrollView(
-           child: Column(
-             children: [
-               Padding(
-                 padding: const EdgeInsets.only(top: 30.0,bottom: 30,right: 20,left: 10),
-                 child: RichText(
-                   textAlign: TextAlign.start,
-                   text:TextSpan(children: [
-                     TextSpan(
-                       text: "Hello, ",
-                       style: TextStyle(fontSize: 30,fontStyle: FontStyle.italic,fontWeight: FontWeight.bold,color: Colors.black)
-                     ),
-                     TextSpan(
-                       text: temp["Name"],
-                       style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,fontStyle: FontStyle.italic,color: Colors.black26)
-                     ),
-                     TextSpan(
-                       text: "\n\nWhat you want to sell Today?",
-                       style: TextStyle(fontSize: 20,color: Colors.black,fontStyle: FontStyle.italic)
-                     )
-                   ]) ,),
-               ),
-              Container(
-               width: double.infinity,
-               height: 200,
-                child: Card(
-                 elevation: 5,
-                 child: Padding(
-                   padding: const EdgeInsets.all(20.0),
-                   child: GridView.count(
-                     mainAxisSpacing: 10,
-                     crossAxisSpacing: 10,
-                     crossAxisCount: 4,
-                     children: myIconList.map((e) {
-                       return Container(
-                         height: 10,
-                         width: 10,
-                         decoration: BoxDecoration(
-                           border: Border.all(
-                             width: 1,
-                             color: Colors.black
-                           ),
-                           borderRadius: BorderRadius.circular(5)
-                         ),
-                         child: IconButton(onPressed: (){}, icon: e)) ;
-                     }).toList(),
-         
-                   ),
-                 ),
+        body: Container(
+      child: data != null
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 30.0, bottom: 30, right: 20, left: 10),
+                  child: RichText(
+                    textAlign: TextAlign.start,
+                    text: TextSpan(children: [
+                      const TextSpan(
+                          text: "Hello, ",
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
+                      TextSpan(
+                          text: data["Name"],
+                          style: const TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.black26)),
+                      const TextSpan(
+                          text: "\n\nWhat you want to sell Today?",
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontStyle: FontStyle.italic))
+                    ]),
+                  ),
                 ),
-              ),
-               Container(
-                 height: 250,
-                 color: Colors.yellowAccent,
-               )
-             ],
-           ),
-         ):
-     const Center(child: CircularProgressIndicator()),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 7,top: 7),
-        child: GNav(
-          rippleColor: Colors.grey[800]!, 
-          hoverColor: Colors.grey[700]!, 
-          haptic: true, 
-          tabBorderRadius: 15, 
-          tabActiveBorder: Border.all(color: Colors.black, width: 1), 
-          tabBorder: Border.all(color: Colors.grey, width: 1), 
-          curve: Curves.easeOutExpo, 
-          duration:const Duration(milliseconds: 200), 
-          gap: 8, 
-          color: Colors.grey[800], 
-          activeColor: Colors.teal, 
-          iconSize: 24, 
-          tabBackgroundColor: Colors.teal.withOpacity(0.1), 
-          padding:const EdgeInsets.symmetric(horizontal: 20, vertical: 5), 
-          tabs:const [
-            GButton(
-        icon: Icons.home,
-        text: 'Home',
-            ),
-             GButton(
-        icon: Icons.heart_broken,
-        text: 'Likes',
-            ),
-             GButton(
-        icon: Icons.search,
-        text: 'Search',
-            ),
-             GButton(
-        icon: Icons.person,
-        text: 'Profile',
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 250,
+                  child: Card(
+                      elevation: 5,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AllScheduledPickups(
+                                                pickupdata: pickupdata,
+                                                Uid: widget.Uid,
+                                                refreshData: refreshData,
+                                              )));
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 155,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.black, width: 1),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.fire_truck,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          RichText(
+                                              text: const TextSpan(
+                                                  text: "Scheduled",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18))),
+                                          RichText(
+                                              text: const TextSpan(
+                                                  text: "Pickups",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18))),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const BlankScreen()));
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 155,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.black, width: 1),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.history,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          RichText(
+                                              text: TextSpan(
+                                                  text: "Pickup",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18))),
+                                          RichText(
+                                              text: TextSpan(
+                                                  text: "History",
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18))),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const myMap()));
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 155,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.black, width: 1),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.map,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      RichText(
+                                          text: const TextSpan(
+                                              text: "Map ",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18)))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const BlankScreen()));
+                                },
+                                child: Container(
+                                  height: 60,
+                                  width: 155,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.black, width: 1),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.users,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      RichText(
+                                          text: TextSpan(
+                                              text: "Enterprises ",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 18)))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                pickupdata.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black, width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: ListTile(
+                            title: Text(
+                                "Scrap Picked Up in ${pickupdata[0]["Date of Pickup"].difference(DateTime.now()).inDays + 1} Days"),
+                            subtitle: Text(
+                                "Total Amount Rs ${pickupdata[0]["Total Amount"]} only"),
+                            trailing: CircleAvatar(
+                              backgroundColor: Colors.teal.shade100,
+                              child: IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ScheduledPickupSummaryPage(
+                                                  scheduledPickup:
+                                                      pickupdata[0],
+                                                  Uid: widget.Uid,
+                                                  pickupdata: pickupdata,
+                                                  refreshData: refreshData,
+                                                )));
+                                  },
+                                  icon: const Icon(
+                                      Icons.arrow_forward_ios_rounded)),
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                const Expanded(
+                  child: SizedBox(
+                    child: Center(
+                      child: Text(
+                        "This Space is for Advertisement Purpose",
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                )
+              ],
             )
-          ]
-        ),
-      ),
-    ) ;
+          : const Center(child: CircularProgressIndicator()),
+    ));
   }
-
-
 }

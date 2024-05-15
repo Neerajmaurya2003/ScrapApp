@@ -2,6 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:learning/Firebase/Firebase_Utilities.dart';
 import 'package:learning/Common%20Services/Uihelper.dart';
 
+
+class userInfo{
+   String name;
+   String address;
+   String mobile;
+   String collection;
+
+  userInfo({
+    required this.name,
+    required this.address,
+    required this.mobile,
+    required this.collection});
+
+    Map<String,Object?> toMap(){
+      return {
+        "Name":name,
+        "Address":address,
+        "Mobile":mobile,
+        "collection":collection,
+      };
+    }
+
+}
+
 class userInfoPage extends StatefulWidget {
 
 final String Uid;
@@ -19,7 +43,7 @@ class _userInfoPageState extends State<userInfoPage> {
   var namecontroller=TextEditingController();
   var mobilenocontroller=TextEditingController();
   var addesscontroller=TextEditingController();
-  Map<String,dynamic> UserInfo={};
+
 
 
   @override
@@ -95,15 +119,8 @@ class _userInfoPageState extends State<userInfoPage> {
               SizedBox(
                 width: double.infinity,
                   child: Uihelper.MyCustomElevatedButton(()async {
-                    UserInfo["Name"]=namecontroller.text.toString();
-                    UserInfo["Mobile no"]=mobilenocontroller.text.toString();
-                    UserInfo["Address"]=addesscontroller.text.toString();
-                    if(UserInfo["Name"]=="" || UserInfo["Mobile no"]=="" || UserInfo["Address"]==""){
-                      return Uihelper.MyCustomdialogueBox(context, "Enter Required Fields");
-                    }
-                    else{
-                      Firebase().UserData(Uid: widget.Uid,context: context,collection: widget.collection,UserData: UserInfo);
-                    }
+                    var UserInfo=userInfo(name: namecontroller.text.toString(), address: addesscontroller.text.toString(), mobile: mobilenocontroller.text.toString(), collection: widget.collection);
+                      Firebase().UserData(Uid: widget.Uid,context: context,collection: widget.collection,UserData: UserInfo.toMap());
                    }, "Submit"))
             ],
           ),

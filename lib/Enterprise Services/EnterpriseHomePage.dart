@@ -12,12 +12,14 @@ class EnterpriseHomePage extends StatefulWidget {
 
 class _EnterpriseHomePageState extends State<EnterpriseHomePage> {
   
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(icon:const Icon(Icons.logout),onPressed: (){
-          Firebase().signoutUser();
+        Firebase().signoutUser(context);
         },),
         title: const Text("Enterprise Home Page"),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,

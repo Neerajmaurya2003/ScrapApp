@@ -42,14 +42,17 @@ dependencies:
   firebase_core: ^2.25.1
   font_awesome_flutter: ^10.7.0
   cloud_firestore: ^4.15.4
-  sqflite: ^2.3.2
-  path: ^1.8.3
   firebase_messaging: ^14.7.17
-  flutter_local_notifications: ^16.3.3
+  flutter_local_notifications: ^17.0.0
   app_settings: ^5.1.1
   firebase_analytics: ^10.8.7
   google_nav_bar: ^5.0.6
   dropdown_textfield: ^1.0.8
+  firebase_database: ^10.4.10
+  location: ^5.0.3
+  flutter_map: ^6.1.0
+  latlong2:
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

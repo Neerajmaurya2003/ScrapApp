@@ -1,19 +1,45 @@
 
 import 'package:flutter/material.dart';
 import 'package:learning/Firebase/Firebase_Utilities.dart';
-
 import '../Common Services/Uihelper.dart';
 
-class enterpriseInfo extends StatefulWidget {
-  final String Uid;
-  final String collection;
-  const enterpriseInfo({super.key,required this.Uid,required this.collection});
+class EnterpriseInfo{
+  String name;
+  String mobile;
+  String address;
+  String gst;
+  String collection;
 
-  @override
-  State<enterpriseInfo> createState() => _enterpriseInfoState();
+  EnterpriseInfo({
+    required this.name,
+    required this.mobile,
+    required this.address,
+    required this.gst,
+    required this.collection,
+    });
+
+    Map<String,Object?> toMap(){
+      return{
+        'Name':name,
+        'Address':address,
+        'Mobile no': mobile,
+        'GST no': gst,
+        'collection':collection,
+      };
+    }
+
 }
 
-class _enterpriseInfoState extends State<enterpriseInfo> {
+class EnterpriseInfoPage extends StatefulWidget {
+  final String Uid;
+  final String collection;
+  const EnterpriseInfoPage({super.key,required this.Uid,required this.collection});
+
+  @override
+  State<EnterpriseInfoPage> createState() => _EnterpriseInfoPageState();
+}
+
+class _EnterpriseInfoPageState extends State<EnterpriseInfoPage> {
   var namecontroller=TextEditingController();
   var mobilecontroller=TextEditingController();
   var addresscontroller=TextEditingController();
@@ -108,18 +134,19 @@ class _enterpriseInfoState extends State<enterpriseInfo> {
               ),
 
               SizedBox(
-                  width: double.infinity,
+                  width: double.maxFinite,
                   child: Uihelper.MyCustomElevatedButton(()async {
-                    userInfo["Organisation Name"]=namecontroller.text.toString();
-                    userInfo["Contact no"]=mobilecontroller.text.toString();
-                    userInfo["Address"]=addresscontroller.text.toString();
-                    userInfo["GST Number"]=gstcontroller.text.toString();
-                    if(userInfo["Organisation Nmae"]=="" || userInfo["Contact no"]=="" || userInfo["Address"]=="" || userInfo["GST Number"]==""){
-                      return Uihelper.MyCustomdialogueBox(context, "Fill Required Info");
-                    }
-                    else{
-                      Firebase().UserData(context: context, collection: widget.collection, Uid: widget.Uid, UserData: userInfo);
-                    }
+                    EnterpriseInfo enterpriseInfo=EnterpriseInfo(name: namecontroller.text.toString(), mobile: mobilecontroller.text.toString(), address: addresscontroller.text.toString(), gst: gstcontroller.text.toString(), collection: widget.collection);
+                    // userInfo["Organisation Name"]=namecontroller.text.toString();
+                    // userInfo["Contact no"]=mobilecontroller.text.toString();
+                    // userInfo["Address"]=addresscontroller.text.toString();
+                    // userInfo["GST Number"]=gstcontroller.text.toString();
+                    // if(userInfo["Organisation Nmae"]=="" || userInfo["Contact no"]=="" || userInfo["Address"]=="" || userInfo["GST Number"]==""){
+                    //   return Uihelper.MyCustomdialogueBox(context, "Fill Required Info");
+                    // }
+                 
+                      Firebase().UserData(context: context, collection: widget.collection, Uid: widget.Uid, UserData: enterpriseInfo.toMap());
+                    
                   }, "Submit"))
             ],
           ),
